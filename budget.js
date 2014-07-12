@@ -1,20 +1,26 @@
 document.addEventListener('DOMContentLoaded', function(){
 
-	var $income = document.getElementById('income'), 
-		$expenses = document.getElementById('expenses'),
-		$goal = document.getElementById('goal');
+    var _daily = localStorage.getItem('daily'),
+        $income = document.getElementById('income'),
+        $expenses = document.getElementById('expenses'),
+        $goal = document.getElementById('goal'),
+        $today = document.getElementById('today');
 
-	document.getElementById('submit').onclick = function() {
-		var income = $income.value,
-			expenses = $expenses.value,
-			goal = $goal.value, 
-			budget,
-			daily;
+        $today.textContent = _daily;
 
-		budget = income - expenses - goal;
+    document.getElementById('submit').onclick = function() {
+        var income = $income.value,
+            expenses = $expenses.value,
+            goal = $goal.value,
+            budget,
+            daily;
 
-		daily = budget / 30;
+        budget = income - expenses - goal;
 
-		document.getElementById('today').textContent = daily;
-	};
+        daily = (budget / 30).toFixed(2);
+
+        localStorage.setItem('daily', daily);
+
+        $today.textContent = daily;
+    };
 });
