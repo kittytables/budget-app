@@ -18,10 +18,20 @@
         </div>
 
         <div>
-            You can spend $<span id="today">0.00</span> today.
+            You can spend $<span id="daily">0.00</span> a day.
         </div>
 
         <button id="save">Save</button>
 
+        <div>
+            <label for="day">Day: </label>
+            <input id="day" type="number" min="1" max="31"/>
+            <label for="spent">Amount spent:</label>
+            <input id="spent"></input>
+        </div>
+
+        <div>
+            Today you have $<span id="budget">0.00</span> left to spend.
+        </div>
     </body>
 </html>
