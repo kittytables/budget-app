@@ -7,13 +7,15 @@ document.addEventListener('DOMContentLoaded', function(){
         $day = document.getElementById('day'),
         $spent = document.getElementById('spent'),
         $budget = document.getElementById('budget'),
+        $savings = document.getElementById('savings'),
         date = new Date();
 
     var data = {
-        spending: new Array(32),
+        spending: new Array(32).join('0').split('').map(function(e) {return parseInt(e, 10);}),
         income: null,
         daily: null,
         expenses: null,
+        savings: null,
         goal: null
     };
 
@@ -51,6 +53,19 @@ document.addEventListener('DOMContentLoaded', function(){
         $spent.value = data.spending[$day.value];
     };
 
+    var calcSavings = function() {
+        var allotted = data.daily * today;
+        var totalspent = 0;
+        for(var i = 1; i <= today; i++)
+        {
+            console.log(totalspent);
+            totalspent += parseInt(data.spending[i]);
+        }
+        data.savings = (allotted - totalspent).toFixed(2);
+        $savings.textContent = data.savings;
+        saveData();
+    };
+
     var saved = localStorage.getItem('data'),
         totaldays = daysInMonth(date.getMonth(), 2014),
         today = date.getDate();
@@ -65,6 +80,7 @@ document.addEventListener('DOMContentLoaded', function(){
     $day.setAttribute('max', totaldays);
     $daily.textContent = data.daily;
     $budget.textContent = data.daily - data.spending[today];
+    $savings.textContent = data.savings;
     showSpending();
 
     $income.oninput = computeValue;
@@ -74,5 +90,6 @@ document.addEventListener('DOMContentLoaded', function(){
     $day.oninput = showSpending;
 
     document.getElementById('save').onclick = saveData;
+    document.getElementById('calc').onclick = calcSavings;
 
 });
