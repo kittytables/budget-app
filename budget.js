@@ -9,12 +9,12 @@ document.addEventListener('DOMContentLoaded', function(){
         _expenses = localStorage.getItem('expenses'),
         _goal = localStorage.getItem('goal');
 
-        $income.value = _income;
-        $expenses.value = _expenses;
-        $goal.value = _goal;
-        $today.textContent = _daily;
+    $income.value = _income;
+    $expenses.value = _expenses;
+    $goal.value = _goal;
+    $today.textContent = _daily;
 
-    document.getElementById('submit').onclick = function() {
+    var computeValue = function() {
         var income = $income.value,
             expenses = $expenses.value,
             goal = $goal.value,
@@ -32,4 +32,8 @@ document.addEventListener('DOMContentLoaded', function(){
         localStorage.setItem('expenses', expenses);
         localStorage.setItem('goal', goal);
     };
+
+    $income.oninput = computeValue;
+    $expenses.oninput = computeValue;
+    $goal.oninput  = computeValue;
 });
