@@ -3,37 +3,49 @@ document.addEventListener('DOMContentLoaded', function(){
     var $income = document.getElementById('income'),
         $expenses = document.getElementById('expenses'),
         $goal = document.getElementById('goal'),
-        $today = document.getElementById('today'),
-        _daily = localStorage.getItem('daily'),
-        _income = localStorage.getItem('income'),
-        _expenses = localStorage.getItem('expenses'),
-        _goal = localStorage.getItem('goal');
+        $today = document.getElementById('today');
 
-    $income.value = _income;
-    $expenses.value = _expenses;
-    $goal.value = _goal;
-    $today.textContent = _daily;
+    var data = {
+        spending: new Array(31),
+        income: null,
+        daily: null,
+        expenses: null,
+        goal: null
+    };
 
     var computeValue = function() {
-        var income = $income.value,
-            expenses = $expenses.value,
-            goal = $goal.value,
-            budget,
+        data.income = $income.value;
+        data.expenses = $expenses.value;
+        data.goal = $goal.value;
+        var budget,
             daily;
 
-        budget = income - expenses - goal;
+        budget = data.income - data.expenses - data.goal;
 
         daily = (budget / 30).toFixed(2);
 
         $today.textContent = daily;
-
-        localStorage.setItem('daily', daily);
-        localStorage.setItem('income', income);
-        localStorage.setItem('expenses', expenses);
-        localStorage.setItem('goal', goal);
+        data.daily = daily;
     };
+
+    var saveData = function() {
+        localStorage.setItem('data', JSON.stringify(data));
+    };
+
+    var saved = localStorage.getItem('data');
+
+    if(saved)
+        data = JSON.parse(saved);
+
+    $income.value = data.income;
+    $expenses.value = data.expenses;
+    $goal.value = data.goal;
+    $today.textContent = data.daily;
 
     $income.oninput = computeValue;
     $expenses.oninput = computeValue;
     $goal.oninput  = computeValue;
+
+    document.getElementById('save').onclick = saveData;
+
 });
