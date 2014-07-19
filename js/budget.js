@@ -41,10 +41,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
     var addSpending = function() {
         if ($day.value === today.toString())
-        {
-            console.log('hello');
             $budget.textContent = data.daily - $spent.value;
-        }
         data.spending[$day.value] = $spent.value;
         saveData();
     };
@@ -93,3 +90,6 @@ document.addEventListener('DOMContentLoaded', function(){
     document.getElementById('calc').onclick = calcSavings;
 
 });
+
+//= require foundation
+$(document).foundation();
