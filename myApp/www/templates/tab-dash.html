@@ -2,33 +2,31 @@
   <ion-content class="has-header padding">
     <div>
             <label for="income">Your monthly income</label>
-            <input type="text" id="income"/>
+            <input type="text" id="income" ng-model="data.income"/>
         </div>
             <label for="expenses">Your base monthly expenses</label>
-            <input type="text" id="expenses"/>
+            <input type="text" id="expenses" ng-model="data.expenses"/>
         </div>
         <div>
             <label for="goal">Your savings goal</label>
-            <input type="text" id="goal"/>
+            <input type="text" id="goal" ng-model="data.goal"/>
         </div>
 
         <div>
-            You can spend $<span id="daily">0.00</span> a day.
+            You can spend <span id="daily">{{ computeValue() | currency }}</span> a day.
         </div>
-
-        <button id="save">Save</button>
 
         <div>
             <label for="day">Day: </label>
-            <input id="day" type="number" min="1" max="31"/>
+            <input id="day" type="number" min="1" max="{{max}}" ng-model="day"/>
             <label for="spent">Amount spent:</label>
-            <input id="spent"></input>
+            <input type="number" id="spent" ng-model="data.spending[day]" ng-change="calcLeft()"></input>
         </div>
 
         <div>
-            You have $<span id="budget">0.00</span> left to spend today.
-            You have saved $<span id="savings">0.00</span> this month.
-            <button id="calc">Recalculate</button>
+            You have <span id="budget">{{left | currency}}</span> left to spend today.
+            You have saved <span id="savings">{{data.savings | currency}}</span> this month.
+            <button id="calc" ng-click="calcSavings()">Recalculate</button>
         </div>
   </ion-content>
 </ion-view>
